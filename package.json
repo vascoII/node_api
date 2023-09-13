@@ -4,17 +4,25 @@
   "description": "node api",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test": "mocha --recursive --exit"
   },
   "author": "vascoII",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "chai-as-promised": "^7.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "mongoose": "^7.5.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0",
+    "sinon": "^15.2.0"
   }
 }

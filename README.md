@@ -35,6 +35,32 @@ You can interact with the API using the following endpoints:
 - **PUT** `/cars/:name`: Updates a car by its name.
 - **PATCH** `/cars/:name`: Partially updates a car by its name.
 
+### Testing
+
+This application includes a suite of unit tests to ensure its functionality and reliability. We use the mocha testing framework in conjunction with chai for assertions and sinon for mocking.
+Running the Tests
+
+Ensure you have all the required dependencies installed:
+
+      npm install
+
+To run the test suite, execute the following command:
+
+      npm test
+
+The tests cover the following aspects of the application:
+
+    Car Service:
+        Retrieving all cars
+        Retrieving a car by its name
+        Creating a new car
+        Error handling when attempting to create a car that already exists
+        Updating a car by its name
+
+## Contributions and Test Writing
+
+We encourage contributions to the application. If you're adding new functionality or making changes, please ensure that you also write the necessary tests to cover your changes. This helps maintain the reliability of the application.
+
 ## Contributing
 
 If you wish to contribute, kindly follow these steps:

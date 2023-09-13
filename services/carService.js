@@ -14,8 +14,8 @@ class CarService {
   }
 
   async create(carData) {
-    // Check if the car name already exists
-    const existingCar = await this.getByName(carData.name);
+    // Directly checking if the car name already exists
+    const existingCar = await this.carModel.findOne({ name: carData.name });
     if (existingCar) {
       throw new Error("Car with the given name already exists");
     }
