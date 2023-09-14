@@ -1,6 +1,6 @@
 // src/middleware/errorHandler.js
 
-module.exports = (err, req, res, next) => {
+module.exports = (err, req, res) => {
   // Log the error to console for debug
   console.error(err.stack);
 
