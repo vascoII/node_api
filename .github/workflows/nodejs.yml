@@ -16,10 +16,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    # Caching node_modules
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm test
 
+    - run: npm install
+
+    # Running the linter
+    - name: Run Linter
+      run: npm run lint
+
+    - run: npm test
