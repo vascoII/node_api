@@ -74,3 +74,7 @@ If you wish to contribute, kindly follow these steps:
 ## License
 
 This software is released under the MIT License. For more details, please refer to the [LICENSE](LICENSE.md) file.
+
+## Badge
+
+[![Node.js CI](https://github.com/vascoII/node_api/actions/workflows/nodejs.yml/badge.svg)](https://github.com/vascoII/node_api/actions/workflows/nodejs.yml)
