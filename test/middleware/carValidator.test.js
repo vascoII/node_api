@@ -4,7 +4,6 @@ const {
   carValidationRules,
   validate,
 } = require("../../middleware/carValidator");
-const { check } = require("express-validator");
 const sinon = require("sinon");
 
 describe("carValidator Middleware", () => {
