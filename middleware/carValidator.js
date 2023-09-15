@@ -32,8 +32,13 @@ const validate = (req, res, next) => {
     return next();
   }
 
-  const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
+  const extractedErrors = errors.array().reduce((acc, err) => {
+    if (!acc[err.path]) {
+      acc[err.path] = [];
+    }
+    acc[err.path].push(err.msg);
+    return acc;
+  }, {});
 
   return res.status(400).json({ errors: extractedErrors });
 };
