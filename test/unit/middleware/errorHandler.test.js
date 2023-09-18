@@ -1,6 +1,6 @@
-// src/test/middleware/errorHandler.test.js
+// src/test/unit//middleware/errorHandler.test.js
 
-const errorHandler = require("../../middleware/errorHandler");
+const errorHandler = require("../../../middleware/errorHandler");
 const sinon = require("sinon");
 
 describe("errorHandler Middleware", () => {

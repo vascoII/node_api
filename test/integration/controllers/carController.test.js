@@ -1,4 +1,4 @@
-// src/test/controllers/carController.test.js
+// src/test/integration/controllers/carController.test.js
 
 const {
   expectResponseStatus,
@@ -13,8 +13,8 @@ const chaiHttp = require("chai-http");
 
 chai.use(chaiHttp);
 
-const carController = require("../../controllers/carController");
-const CarService = require("../../services/carService");
+const carController = require("../../../controllers/carController");
+const CarService = require("../../../services/carService");
 
 // Mock express's `res` object methods.
 function getResponseObject() {
@@ -122,7 +122,7 @@ describe("carController", () => {
       carServiceStub.restore();
     });
 
-    it("should create a car and return status 200 with created car", async () => {
+    it("should create a car and return status 201 with created car", async () => {
       const createdCar = { name: "Audi", description: "Updated description" };
       carServiceStub.resolves(createdCar);
 
@@ -137,7 +137,7 @@ describe("carController", () => {
 
       await carController.createCar(req, res);
 
-      expectStatusCalledWith(res, 200);
+      expectStatusCalledWith(res, 201);
       expectJsonCalledWith(res, { car: createdCar });
     });
 

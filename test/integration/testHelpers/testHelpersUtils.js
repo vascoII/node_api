@@ -1,4 +1,4 @@
-// src/test/testHelpers/testHelpersUtils.js
+// src/test/integration/testHelpers/testHelpersUtils.js
 
 const { expect } = require("chai");
 

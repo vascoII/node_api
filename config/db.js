@@ -4,6 +4,12 @@ const mongoose = require("mongoose");
 const environment = require("./environment");
 
 const connectToDatabase = async () => {
+  // Determine which URI to use
+  const currentURI =
+    process.env.NODE_ENV === "test"
+      ? environment.MONGODB_URI_TEST
+      : environment.MONGODB_URI;
+
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -11,7 +17,7 @@ const connectToDatabase = async () => {
   };
 
   try {
-    await mongoose.connect(environment.MONGODB_URI, options);
+    await mongoose.connect(currentURI, options);
     console.log("DB connected");
   } catch (error) {
     console.error("DB connection error:", error.message);

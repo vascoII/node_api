@@ -1,4 +1,4 @@
-// src/test/services/carService.test.js
+// src/test/unit//services/carService.test.js
 
 const chai = require("chai");
 const sinon = require("sinon");
@@ -8,8 +8,8 @@ const expect = chai.expect;
 
 chai.use(chaiAsPromised); // Integrate chai-as-promised
 
-const CarService = require("../../services/carService");
-const Car = require("../../models/car");
+const CarService = require("../../../services/carService");
+const Car = require("../../../models/car");
 
 describe("CarService", () => {
   describe("getAll", () => {
@@ -73,8 +73,6 @@ describe("CarService", () => {
     });
 
     it("should save a new car if it doesn't exist", async () => {
-      console.log("Before calling create...");
-
       const mockCar = { name: "Audi", description: "Some description" };
       findOneStub.resolves(null); // mock that car doesn't exist yet
       saveStub.resolves(mockCar);

@@ -1,9 +1,9 @@
-// src/test/middleware/carValidator.test.js
+// src/test/unit/middleware/carValidator.test.js
 
 const {
   carValidationRules,
   validate,
-} = require("../../middleware/carValidator");
+} = require("../../../middleware/carValidator");
 const sinon = require("sinon");
 
 describe("carValidator Middleware", () => {

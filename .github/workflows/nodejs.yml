@@ -2,39 +2,53 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ] 
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: --health-cmd "mongo --eval 'db.runCommand({ping:1})'" --health-interval 10s --health-timeout 5s --health-retries 10
 
     strategy:
       matrix:
         node-version: [16.x] # You can specify multiple versions if needed
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    # Caching node_modules
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-node-
+      # Caching node_modules
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - run: npm install
+      - run: npm install
 
-    # Running the linter
-    - name: Run Linter
-      run: npm run lint
+      # Running the linter
+      - name: Run Linter
+        run: npm run lint
 
-    - run: npm test
+      # Running Unit tests
+      - run: npm run test:unit
+
+      # Runnning Integration tests
+      - run: npm run test:integration
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/nodeapitest?authSource=admin
