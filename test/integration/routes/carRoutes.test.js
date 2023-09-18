@@ -4,7 +4,8 @@ const request = require("supertest");
 const expect = require("chai").expect;
 const app = require("../../../app"); // Adjust the path according to your folder structure
 
-describe("Car Routes Integration Tests", () => {
+describe("Car Routes Integration Tests", function () {
+  this.timeout(10000);
   const carData = {
     name: "Audi",
     description: "Some description of the car as it is a nice one",

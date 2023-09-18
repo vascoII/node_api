@@ -9,13 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        options: --health-cmd "mongo --eval 'db.runCommand({ping:1})'" --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      NODE_ENV: test
+      MONGODB_URI: mongodb+srv://root:G2t6GIJgMiqJCoLp@cluster01.hhglm5i.mongodb.net/nodeapitest?retryWrites=true&w=majority
 
     strategy:
       matrix:
@@ -47,8 +43,22 @@ jobs:
       # Running Unit tests
       - run: npm run test:unit
 
-      # Runnning Integration tests
+      # Debugging
+      - name: Check if NODE_ENV is set
+        run: |
+          if [ -z "$NODE_ENV" ]; then
+            echo "NODE_ENV is not set!"
+          else
+            echo "NODE_ENV is set."
+          fi
+
+      - name: Check if MONGODB_URI is set
+        run: |
+          if [ -z "$MONGODB_URI" ]; then
+            echo "MONGODB_URI is not set!"
+          else
+            echo "MONGODB_URI is set."
+          fi
+
+      # Running Integration tests
       - run: npm run test:integration
-        env:
-          NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/nodeapitest?authSource=admin
