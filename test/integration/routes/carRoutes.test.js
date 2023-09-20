@@ -2,7 +2,8 @@
 
 const request = require("supertest");
 const expect = require("chai").expect;
-const app = require("../../../app"); // Adjust the path according to your folder structure
+const app = require("../../../app");
+const Car = require("../../../models/car"); // Import the Car model
 
 describe("Car Routes Integration Tests", function () {
   this.timeout(10000);
@@ -10,6 +11,12 @@ describe("Car Routes Integration Tests", function () {
     name: "Audi",
     description: "Some description of the car as it is a nice one",
   };
+
+  after(async () => {
+    // Cleanup: delete the specific test car once all tests are done
+    await Car.deleteOne({ name: carData.name });
+    console.log("Database cleaned up.");
+  });
 
   it("POST - Create a new car", async () => {
     const response = await request(app)

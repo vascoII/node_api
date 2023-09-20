@@ -25,4 +25,4 @@ app.listen(environment.PORT, () => {
   console.log(`A node API is listening on port: ${environment.PORT}`);
 });
 
-module.exports = app; // for testing purposes
+module.exports = app;
