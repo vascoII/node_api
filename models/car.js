@@ -1,9 +1,10 @@
 // src/models/car.js
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 // Define the car schema
-const carSchema = new mongoose.Schema(
+const carSchema = new Schema(
   {
     name: {
       type: String,
@@ -19,6 +20,11 @@ const carSchema = new mongoose.Schema(
       trim: true,
       minlength: 4,
       maxlength: 200,
+    },
+    constructor: {
+      type: Schema.Types.ObjectId,
+      ref: "Constructor",
+      required: true,
     },
   },
   {
