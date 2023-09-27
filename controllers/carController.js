@@ -2,16 +2,17 @@
 
 const Car = require("../models/car");
 const CarService = require("../services/carService");
+const brandUtils = require("./helpers/brandUtils");
 
-// We'll use dependency injection to bring in the service layer.
+// We'll use dependency injection to bring in the services layer.
 const carService = new CarService(Car);
 
-exports.getAllCars = async (req, res) => {
+exports.getAllCarsBybrand = async (req, res) => {
   try {
-    const cars = await carService.getAll();
-    res.status(200).json(cars);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const cars = await carService.getAllBybrand(req.params.brandId);
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -29,7 +30,10 @@ exports.getCarByName = async (req, res) => {
 
 exports.createCar = async (req, res) => {
   try {
-    const result = await carService.create(req.body);
+    const { brand, ...carData } = req.body;
+    await brandUtils.validateBrandId(brand);
+
+    const result = await carService.create(carData, brand);
     res.status(201).json({ car: result });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -38,6 +42,9 @@ exports.createCar = async (req, res) => {
 
 exports.updateCarByName = async (req, res) => {
   try {
+    const { brand } = req.body;
+    await brandUtils.validateBrandId(brand);
+
     const updatedCar = await carService.updateByName(req.params.name, req.body);
     if (!updatedCar) {
       return res.status(404).json({ error: "Car not found" });
@@ -50,6 +57,11 @@ exports.updateCarByName = async (req, res) => {
 
 exports.patchCarByName = async (req, res) => {
   try {
+    const { brand } = req.body;
+    if (brand) {
+      await brandUtils.validateBrandId(brand);
+    }
+
     const patchedCar = await carService.patchByName(req.params.name, req.body);
     if (!patchedCar) {
       return res.status(404).json({ error: "Car not found" });

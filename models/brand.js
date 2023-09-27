@@ -1,9 +1,9 @@
-// src/models/constructor.js
+// src/models/brand.js
 
 const mongoose = require("mongoose");
 
-// Define the constructor schema
-const constructorSchema = new mongoose.Schema(
+// Define the brand schema
+const brandSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -16,6 +16,12 @@ const constructorSchema = new mongoose.Schema(
     foundedDate: {
       type: Date,
       required: true,
+      set: (value) => {
+        const [day, month, year] = value
+          .split("/")
+          .map((num) => parseInt(num, 10));
+        return new Date(year, month - 1, day);
+      },
     },
     country: {
       type: String,
@@ -31,6 +37,6 @@ const constructorSchema = new mongoose.Schema(
 );
 
 // Compile the schema into a model
-const Constructor = mongoose.model("Car", constructorSchema);
+const Brand = mongoose.model("Brand", brandSchema);
 
-module.exports = Constructor;
+module.exports = Brand;

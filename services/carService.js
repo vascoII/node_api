@@ -5,23 +5,23 @@ class CarService {
     this.carModel = carModel;
   }
 
-  async getAll() {
-    return await this.carModel.find();
+  async getAllBybrand(brandId) {
+    return await this.carModel.find({ brand: brandId });
   }
 
   async getByName(name) {
     return await this.carModel.findOne({ name: name });
   }
 
-  async create(carData) {
-    // Directly checking if the car name already exists
+  async create(carData, brand) {
     const existingCar = await this.carModel.findOne({ name: carData.name });
     if (existingCar) {
       throw new Error("Car with the given name already exists");
     }
 
-    const car = new this.carModel(carData);
-    return await car.save();
+    carData.brand = brand;
+    const newCar = new this.carModel(carData);
+    return await newCar.save();
   }
 
   async updateByName(name, carData) {

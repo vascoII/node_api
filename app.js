@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const environment = require("./config/environment");
 const db = require("./config/db");
 const carRoutes = require("./routes/carRoutes");
+const brandRoutes = require("./routes/brandRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 app.use("/cars", carRoutes);
+app.use("/brands", brandRoutes);
 app.use(errorHandler);
 
 app.listen(environment.PORT, () => {

@@ -6,8 +6,8 @@ const validator = require("../middleware/carValidator");
 
 const router = express.Router();
 
-// GET all cars
-router.get("/", carController.getAllCars);
+// GET all cars by brand
+router.get("/brand/:brandId", carController.getAllCarsBybrand);
 
 // POST - Create a new car
 router.post(

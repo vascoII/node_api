@@ -11,7 +11,7 @@ const carSchema = new Schema(
       required: true,
       trim: true, // Remove any whitespace
       unique: true, // Ensure that name values are unique
-      minlength: 4,
+      minlength: 2,
       maxlength: 20,
     },
     description: {
@@ -21,9 +21,9 @@ const carSchema = new Schema(
       minlength: 4,
       maxlength: 200,
     },
-    constructor: {
+    brand: {
       type: Schema.Types.ObjectId,
-      ref: "Constructor",
+      ref: "Brand",
       required: true,
     },
   },

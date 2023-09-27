@@ -3,9 +3,11 @@
 const { check, validationResult } = require("express-validator");
 
 const carValidationRules = () => [
+  check("brand", "Give a Brand ID").notEmpty(),
+  check("brand", "Brand ID is invalid").isMongoId(),
   check("name", "Give a Name").notEmpty(),
-  check("name", "Name is 4 characters minimum, 20 characters maximum").isLength(
-    { min: 4, max: 20 }
+  check("name", "Name is 2 characters minimum, 20 characters maximum").isLength(
+    { min: 2, max: 20 }
   ),
   check("description", "Give a Description").notEmpty(),
   check(
@@ -15,15 +17,17 @@ const carValidationRules = () => [
 ];
 
 const patchCarValidationRules = () => [
-  check("name", "Name is 4 characters minimum, 20 characters maximum")
+  check("name", "Name is 2 characters minimum, 20 characters maximum")
     .optional()
-    .isLength({ min: 4, max: 20 }),
+    .isLength({ min: 2, max: 20 }),
   check(
     "description",
     "Description is 4 characters minimum, 200 characters maximum"
   )
     .optional()
     .isLength({ min: 4, max: 200 }),
+  check("brand", "Give a brand ID").optional().notEmpty(),
+  check("brand", "Constructor ID is invalid").optional().isMongoId(),
 ];
 
 const validate = (req, res, next) => {
@@ -33,6 +37,7 @@ const validate = (req, res, next) => {
   }
 
   const extractedErrors = errors.array().reduce((acc, err) => {
+    console.log(acc);
     if (!acc[err.path]) {
       acc[err.path] = [];
     }
